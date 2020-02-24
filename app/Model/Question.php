@@ -28,7 +28,6 @@ class Question extends Model
         return $this->belongsTo(Category::class);
     }
 
-    //Accessor 
     public function getPathAttribute(){
         return asset("api/question/$this->slug");
     }

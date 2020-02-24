@@ -41,7 +41,8 @@ class QuestionController extends Controller
         //
         // auth()->user()->question()->create($request->all());
         Question::create($request->all());
-        return response('Created!', Response::HTTP_CREATED);
+        
+        return response('Created!', Response::HTTP_CREATED)->header('Content-Type', 'text/plain');;
     }
 
     /**
@@ -77,6 +78,8 @@ class QuestionController extends Controller
     public function update(Request $request, Question $question)
     {
         //
+        $question->update($request->all());
+        return response('Updated!', Response::HTTP_ACCEPTED)->header('Content-Type', 'text/plain');;
     }
 
     /**
@@ -89,6 +92,6 @@ class QuestionController extends Controller
     {
         //
         $question->delete();
-        return response('Deleted!', Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
