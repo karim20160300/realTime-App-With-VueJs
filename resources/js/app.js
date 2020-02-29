@@ -22,6 +22,12 @@ window.Vue = require('vue');
 Vue.component('AppHome', require('./components/AppHome.vue').default);
 import Vuetify from 'vuetify';
 Vue.use(Vuetify);
+
+import User from './Helpers/User';
+window.User = User;
+// console.log(User.id())
+// User.logout();
+// console.log(User.loggedIn());
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
