@@ -12,7 +12,10 @@ class User{
         const username = res.data.user;
         if(Token.isValid(access_token)){
             AppStorage.store(username, access_token);
+            window.location = '/forum'
+            // console.log('response after login is here');
         }
+        
     }
 
     hasToken(){
@@ -29,6 +32,7 @@ class User{
 
     logout(){
         AppStorage.clear();
+        window.location = '/forum'
     }
 
     name(){
