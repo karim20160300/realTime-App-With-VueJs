@@ -4,7 +4,7 @@
       <v-toolbar dense>
        
           
-        <v-toolbar-title>Fourm</v-toolbar-title>
+        <v-toolbar-title>Forum</v-toolbar-title>
   
         <v-spacer></v-spacer>
   
