@@ -46,6 +46,13 @@
             if(User.loggedIn()){
                 this.getNotifications();
             }
+
+            Echo.private('App.User.' + User.id())
+            .notification((notification) => {
+            this.unread.unshift(notification)
+            this.unreadCount++
+            this.$toaster.success(`Your Question (${notification.questionTitle}) Replied By Mr: ${notification.replyBy}`)
+             });
         },
         methods:{
             getNotifications(){

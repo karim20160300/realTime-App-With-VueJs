@@ -37,6 +37,12 @@ import Reply from './reply'
         },
         components:{Reply},
         props:['replies'],
+        created(){
+            Echo.private('App.User.' + User.id())
+            .notification((notification) => {
+             this.replies.unshift(notification.reply)
+    });
+        },
         methods:{
             showOrHideReplies(){
                 if(this.showOrHideRep == false){

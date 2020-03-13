@@ -22,6 +22,12 @@
         created(){
             this.totalCount = this.getReplyLikes();
             this.iconChange();
+            Echo.channel('likeChannel')
+            .listen('LikeEvent', (e) => {
+                if(e.id == this.reply.id){
+                    e.type == 1 ? this.totalCount ++ : this.totalCount--
+                }
+    });
         },
         methods:{
             likeIt(){

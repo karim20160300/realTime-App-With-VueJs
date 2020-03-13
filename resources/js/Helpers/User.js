@@ -45,11 +45,16 @@ class User{
     }
 
     own(id){
-        return this.id() == id;
+        if(this.loggedIn()){
+            return this.id() == id;
+        }else{
+            return false;
+        }
+        
     }
 
     admin(){
-        if(this.loggedIn){
+        if(this.loggedIn()){
             return this.id() == 34;
         }else{
             return false;

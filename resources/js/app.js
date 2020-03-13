@@ -29,6 +29,12 @@ import 'simplemde/dist/simplemde.min.css'
 
 Vue.component('vue-simplemde', VueSimplemde)
 
+
+import Toaster from 'v-toaster'
+import 'v-toaster/dist/v-toaster.css'
+Vue.use(Toaster, {timeout: 8000})
+
+
 import md from 'marked'
 window.md = md
 import User from './Helpers/User';

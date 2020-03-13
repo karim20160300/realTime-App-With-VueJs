@@ -43,11 +43,15 @@ import QuestionReplies from '../reply/QuestionReplies'
         props:['question'],
         data(){
             return{
-                own: User.own(this.question.user_id),
-                replyCount:this.question.replies_count
+                // own: User.own(this.question.user_id),
+                // replyCount:this.question.replies_count
+                own: false,
+                replyCount: 0
             }
         },
         created(){
+            this.findReplyCount()
+            this.isOwn()
             EventBus.$on('deleteReply', ()=>{
                 if(this.replyCount > 0){
                     this.replyCount -=1
@@ -56,6 +60,11 @@ import QuestionReplies from '../reply/QuestionReplies'
             EventBus.$on('newReplyAdded', ()=>{
                 this.replyCount +=1
             })
+
+            Echo.private('App.User.' + User.id())
+            .notification((notification) => {
+                this.replyCount++
+             });
         },
         methods:{
             destroy(){
@@ -65,7 +74,20 @@ import QuestionReplies from '../reply/QuestionReplies'
             },
             edit(){
                 EventBus.$emit('startEditing');
+            },
+            isOwn(){
+                 if(User.own(this.question.user_id))
+                 {
+                     this.own = true;
+                 }
+            },
+            findReplyCount(){
+                 if(this.question.replies_count !== null)
+                 {
+                     this.replyCount = this.question.replies_count;
+                 }
             }
+
         }
     }
 </script>
