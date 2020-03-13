@@ -11,7 +11,12 @@
                     {{question.created_at}}</span>
             </div>
             <v-spacer></v-spacer>
-            <v-btn color="teal">5 Replies</v-btn>
+            <create-new-reply
+                :replies = question.replies
+                :question= question
+            >
+            </create-new-reply>
+            <v-btn color="teal" dark>{{replyCount}} Replies</v-btn>
         </v-card-title>
         <v-card-text v-html="question.body"></v-card-text>
         <v-card-actions v-if="own">
@@ -24,16 +29,33 @@
         </v-card-actions>
     </v-card>
     <br>
+    <question-replies
+    :replies = question.replies
+    ></question-replies>
     </div>
 </template>
 
 <script>
+import CreateNewReply from '../reply/CreateNewReply'
+import QuestionReplies from '../reply/QuestionReplies'
     export default {
+        components:{QuestionReplies,CreateNewReply},
         props:['question'],
         data(){
             return{
-                own: User.own(this.question.user_id)
+                own: User.own(this.question.user_id),
+                replyCount:this.question.replies_count
             }
+        },
+        created(){
+            EventBus.$on('deleteReply', ()=>{
+                if(this.replyCount > 0){
+                    this.replyCount -=1
+                }
+            }),
+            EventBus.$on('newReplyAdded', ()=>{
+                this.replyCount +=1
+            })
         },
         methods:{
             destroy(){

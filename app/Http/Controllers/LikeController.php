@@ -15,15 +15,21 @@ class LikeController extends Controller
         $this->middleware('JWT');
     }
     public function likeIt(Reply $reply){
-        $reply->like()->create([
-            // 'user_id' => auth()->id
-            'user_id' => '1',
-        ]);
-        return response('Created!', Response::HTTP_CREATED)->header('Content-Type','text/plain');
-    }
+        if($reply != null){
+            $reply->like()->create([
+                'user_id' => auth()->id(),
+                // 'user_id' => '1',
+            ]);
+            return response('Created!', Response::HTTP_CREATED)->header('Content-Type','text/plain');
+        
+        }
+        }
 
     public function unlikeIt(Reply $reply){
-        $reply->like->where('user_id',1)->first()->delete();
+        if($reply != null){
+            $reply->like->where('user_id',auth()->id())->first()->delete();
       return response(null, Response::HTTP_NO_CONTENT);
+        }
+        
     }
 }

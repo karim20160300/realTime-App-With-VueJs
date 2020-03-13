@@ -47,8 +47,8 @@ class CategoryController extends Controller
     {
         //
         $request['slug'] = Str::slug($request['name'], '-');
-        Category::create($request->all());
-        return response('Created!', Response::HTTP_CREATED)->header('Content-Type','text/plain');
+        $category = Category::create($request->all());
+        return response(new CategoryResource($category), Response::HTTP_CREATED)->header('Content-Type','text/plain');
     }
 
     /**
@@ -84,9 +84,13 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
-        $request['slug'] = Str::slug($request['name'], '-');
-        $category->update($request->all());
-        return response('Updated!', Response::HTTP_ACCEPTED)->header('Content-Type', 'text/plain');
+        $category->update(
+            [
+                'name'=> $request->name,
+                'slug'=> Str::slug($request->name)
+            ]
+        );
+        return response(new CategoryResource($category), Response::HTTP_ACCEPTED)->header('Content-Type', 'text/plain');
     }
 
     /**
